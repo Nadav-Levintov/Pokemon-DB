@@ -154,15 +154,15 @@ int avlNode<T, C>::updateHeight() {
 		height = 0; // yes- height is 0.
 	}
 	else {
-		if (!left)
+		if (!left) // does it have only right son?
 		{
 			height = 1 + right->updateHeight();
 		}
-		else if (!right)
+		else if (!right) // does it have only left son?
 		{
 			height = 1 + left->updateHeight();
 		}
-		else
+		else // it has both sons.
 		{
 			height = 1 + max(left->updateHeight(), right->updateHeight()); // not a leaf - height is 1+max height of sons.
 		}
