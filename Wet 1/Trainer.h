@@ -8,7 +8,7 @@
 
 class Trainer {
 	int trainerID;
-	int maxPokemonLevel;
+	int maxPokemonLevel; // is needed?
 	int maxPokemonID;
 	avlTree<Pokemon, pokemonCompareByLevel> levelTree;
 	avlTree<Pokemon, pokemonCompareByID> idTree;
