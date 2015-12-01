@@ -430,6 +430,10 @@ bool avlTree<T, C>::insert(T & item) {
 }
 template<class T, class C>
 void avlTree<T, C>::buildEmpty(int newSize) {
+	if (newSize < 1)
+	{
+		return;
+	}
 	int newHeight = 0;
 	while ((powInt(2, newHeight + 1) - 1) < newSize) {
 		newHeight++;
