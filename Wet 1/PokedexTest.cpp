@@ -159,6 +159,7 @@ bool basicStonesTest()
 
 
 	ASSERT_NO_THROW(DS.UpdateLevelsMain(2,2));
+
 	int *pokeArray3 = NULL;
 	ASSERT_NO_THROW(DS.GetAllPokemonsByLevel(-1, &pokeArray3, &num));
 	ASSERT_EQUALS(5, num);
@@ -180,11 +181,8 @@ bool basicStonesTest()
 
 
 
-	ASSERT_THROW(Pokedex::InvalidInput, DS.GetAllPokemonsByLevel(0, &pokeArray, &num));
-	ASSERT_THROW(Pokedex::InvalidInput, DS.GetAllPokemonsByLevel(-1, NULL, &num));
-	ASSERT_THROW(Pokedex::InvalidInput, DS.GetAllPokemonsByLevel(-1, &pokeArray, NULL));
-	ASSERT_THROW(Pokedex::Failure, DS.GetAllPokemonsByLevel(3, &pokeArray, &num));
-
+	ASSERT_THROW(Pokedex::InvalidInput, DS.UpdateLevelsMain(-1,2));
+	ASSERT_THROW(Pokedex::InvalidInput, DS.UpdateLevelsMain(2,-1));
 
 	return true;
 }
