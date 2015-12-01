@@ -136,7 +136,7 @@ void Pokedex::getTopPokemon(int trainerID, int* pokemonID) {
 
 void Pokedex::GetAllPokemonsByLevel(int trainerID, int ** pokemons,
 		int *numOfPokemon) {
-	if (trainerID == 0) {
+	if (trainerID == 0||!pokemons ||!numOfPokemon) {
 		throw InvalidInput();
 	}
 	if (trainerID < 0) {
