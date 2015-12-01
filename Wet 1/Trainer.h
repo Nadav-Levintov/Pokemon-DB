@@ -8,7 +8,6 @@
 
 class Trainer {
 	int trainerID;
-	int maxPokemonLevel; // is needed?
 	int maxPokemonID;
 	avlTree<Pokemon, pokemonCompareByLevel> levelTree;
 	avlTree<Pokemon, pokemonCompareByID> idTree;
@@ -18,8 +17,6 @@ public:
 	Trainer(int trainerID);
 	int getMaxPokemonId() const;
 	void setMaxPokemonId(int maxPokemonId);
-	int getMaxPokemonLevel() const;
-	void setMaxPokemonLevel(int maxPokemonLevel);
 	int getTrainerId() const;
 	void setTrainerId(int trainerId);
 	bool addPokemon(Pokemon& pokemon);

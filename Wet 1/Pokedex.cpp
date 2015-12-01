@@ -25,7 +25,7 @@ Pokemon * Pokedex::mergeLevelMainArrays(Pokemon * a, Pokemon * b) {
 }
 
 Pokedex::Pokedex() :
-		maxPokemonID(-1), maxPokemonLevel(-1) {
+		maxPokemonID(-1) {
 }
 
 void Pokedex::addTrainer(int trainerID) {
@@ -255,22 +255,17 @@ void Pokedex::UpdateLevelsMain(int stoneCode, int stoneFactor) {
 	}
 }
 
-void Pokedex::setMaxPokemonLevel(int maxPokemonLevel) {
-	this->maxPokemonLevel = maxPokemonLevel;
-}
 
 void Pokedex::updateMax() {
 	avlNode<Pokemon, pokemonCompareByLevel>* ptr = mainLevelTree.getRoot();
 	if (!ptr) {
 		this->setMaxPokemonId(NO_POKEMON);
-		this->setMaxPokemonLevel(NO_POKEMON);
 		return;
 	}
 	while (ptr->getLeft()) {
 		ptr = ptr->getLeft();
 	}
 	this->setMaxPokemonId(ptr->getData().getID());
-	this->setMaxPokemonLevel(ptr->getData().getLevel());
 }
 
 int Pokedex::getMaxPokemonId() const {
@@ -281,6 +276,3 @@ void Pokedex::setMaxPokemonId(int maxPokemonId) {
 	maxPokemonID = maxPokemonId;
 }
 
-int Pokedex::getMaxPokemonLevel() const {
-	return maxPokemonLevel;
-}

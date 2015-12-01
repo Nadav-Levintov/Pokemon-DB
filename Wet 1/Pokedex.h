@@ -12,7 +12,6 @@ class Pokedex {
 	avlTree<Pokemon,pokemonCompareByID> mainIdTree;
 	avlTree<Pokemon,pokemonCompareByLevel> mainLevelTree;
 	int maxPokemonID;
-	int maxPokemonLevel; //TODO check if needed
 private:
 	Pokemon* mergeLevelMainArrays(Pokemon* a, Pokemon* b);
 public:
@@ -29,8 +28,6 @@ public:
 	void updateMax();
 	int getMaxPokemonId() const;
 	void setMaxPokemonId(int maxPokemonId);
-	int getMaxPokemonLevel() const;
-	void setMaxPokemonLevel(int maxPokemonLevel);
 	class InvalidInput :public exception {};
 	class Failure :public exception {};
 	class AllocationError :public exception {};

@@ -2,7 +2,7 @@
 
 
 Trainer::Trainer(int trainerID) :
-		trainerID(trainerID), maxPokemonLevel(NO_POKEMON), maxPokemonID(
+		trainerID(trainerID), maxPokemonID(
 		NO_POKEMON) {
 }
 
@@ -14,13 +14,7 @@ void Trainer::setMaxPokemonId(int maxPokemonID) {
 	this->maxPokemonID = maxPokemonID;
 }
 
-int Trainer::getMaxPokemonLevel() const {
-	return maxPokemonLevel;
-}
 
-void Trainer::setMaxPokemonLevel(int maxPokemonLevel) {
-	this->maxPokemonLevel = maxPokemonLevel;
-}
 
 int Trainer::getTrainerId() const {
 	return trainerID;
@@ -47,14 +41,12 @@ void Trainer::updateMax() {
 	avlNode<Pokemon, pokemonCompareByLevel>* ptr = levelTree.getRoot();
 	if (!ptr) {
 		this->setMaxPokemonId(NO_POKEMON);
-		this->setMaxPokemonLevel(NO_POKEMON);
 		return;
 	}
 	while (ptr->getLeft()) {
 		ptr = ptr->getLeft();
 	}
 	this->setMaxPokemonId(ptr->getData().getID());
-	this->setMaxPokemonLevel(ptr->getData().getLevel());
 }
 
 void Trainer::updateLevels(int stoneCode, int stoneFactor)
