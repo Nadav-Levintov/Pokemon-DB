@@ -8,7 +8,6 @@
 #include <string.h>
 #include <cmath>
 
-//using namespace std;
 template<class T, class C>
 class avlTree;
 
@@ -26,7 +25,6 @@ class avlNode {
 public:
 	avlNode() :
 		data() {
-		//data = T();
 		left = NULL;
 		right = NULL;
 		parent = NULL;
@@ -97,6 +95,7 @@ public:
 	int getHeight();
 	/*
 	 Update this, and evrey node below it, height and returns it.
+	 RunTime Complex. = O(n) where n is num of nodes in the sub tree.
 	 return:
 	 int - height of the node.
 	 */
@@ -153,7 +152,7 @@ int avlNode<T, C>::updateHeight() {
 	{
 		height = 0; // yes- height is 0.
 	}
-	else {
+	else {// not a leaf - height is 1+max height of sons.
 		if (!left) // does it have only right son?
 		{
 			height = 1 + right->updateHeight();
@@ -164,7 +163,7 @@ int avlNode<T, C>::updateHeight() {
 		}
 		else // it has both sons.
 		{
-			height = 1 + max(left->updateHeight(), right->updateHeight()); // not a leaf - height is 1+max height of sons.
+			height = 1 + max(left->updateHeight(), right->updateHeight()); 
 		}
 	}
 
@@ -179,7 +178,7 @@ template<class T, class C>
 class avlTree {
 	avlNode<T, C>* root;
 	int size;
-	C comparer; // function object, returns True if first parm is *smaller* then second parm.
+	C comparer; // function object, returns True if first parm is SMALLER then second parm.
 
 private:
 	/*
@@ -244,33 +243,16 @@ private:
 	 return:
 	 Status.
 	 */
-	void rollRR(avlNode<T, C>* node) {
-		assert(node != NULL);
-		avlNode<T, C>* oldRight = node->getRight();
-		avlNode<T, C>* parent = node->getParent();
-		oldRight->setParent(parent);
-		if (parent) {
-			if (comparer(parent->getData(), oldRight->getData()))
-				parent->setRight(oldRight);
-			else
-				parent->setLeft(oldRight);
-		}
-		else
-			root = oldRight;
-		node->setRight(oldRight->getLeft());
-		if (oldRight->getLeft())
-			oldRight->getLeft()->setParent(node);
-		oldRight->setLeft(node);
-		node->setParent(oldRight);
-
-		node->setHeight(
-			1 + max(height(node->getRight()), height(node->getLeft())));
-		oldRight->setHeight(
-			1
-			+ max(height(oldRight->getRight()),
-				height(oldRight->getLeft())));
-	}
+	void rollRR(avlNode<T, C>* node);
+	/*
+	This function clears the tree recursvly
+	return:
+	*/
 	void clearAux(avlNode<T, C>* node);
+	/*
+	This function finds and removes the node with the wanted item from the tree.
+	return:
+	*/
 	bool removeAux(avlNode<T, C>* node, T& item);
 	void removeHelper(avlNode<T, C>* node);
 	int height(avlNode<T, C>* node);
@@ -468,11 +450,38 @@ void avlTree<T, C>::insertRebalance(avlNode<T, C> * parent,
 			return;
 		}
 		else {
-			insertRebalance(parent->getParent(), parent); // This junction is balnced, check upwords.
+			insertRebalance(parent->getParent(), parent); // This junction is balanced, check upwords.
 		}
 	}
 }
 
+template<class T, class C>
+void avlTree<T, C>::rollRR(avlNode<T, C>* node) {
+	assert(node != NULL);
+	avlNode<T, C>* oldRight = node->getRight();
+	avlNode<T, C>* parent = node->getParent();
+	oldRight->setParent(parent);
+	if (parent) {
+		if (comparer(parent->getData(), oldRight->getData()))
+			parent->setRight(oldRight);
+		else
+			parent->setLeft(oldRight);
+	}
+	else
+		root = oldRight;
+	node->setRight(oldRight->getLeft());
+	if (oldRight->getLeft())
+		oldRight->getLeft()->setParent(node);
+	oldRight->setLeft(node);
+	node->setParent(oldRight);
+
+	node->setHeight(
+		1 + max(height(node->getRight()), height(node->getLeft())));
+	oldRight->setHeight(
+		1
+		+ max(height(oldRight->getRight()),
+			height(oldRight->getLeft())));
+}
 template<class T, class C>
 void avlTree<T, C>::rollLL(avlNode<T, C> * node) {
 	assert(node != NULL);
